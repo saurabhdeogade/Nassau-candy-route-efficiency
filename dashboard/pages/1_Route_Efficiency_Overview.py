@@ -1,4 +1,3 @@
-import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -6,14 +5,9 @@ import plotly.express as px
 st.set_page_config(layout="wide")
 st.title("🚚 Route Efficiency Overview")
 
-# Cloud-compatible path
-DASHBOARD_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DASHBOARD_DIR = os.path.join(DASHBOARD_DIR, "dashboard")
-
 @st.cache_data
 def load_data():
-    csv_path = os.path.join(DASHBOARD_DIR, "MASTER_route_kpi_table.csv")
-    return pd.read_csv(csv_path)
+    return pd.read_csv("dashboard/MASTER_route_kpi_table.csv")
 
 route_df = load_data()
 
