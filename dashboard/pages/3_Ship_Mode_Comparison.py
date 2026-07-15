@@ -76,8 +76,10 @@ diff = (
 )
 if diff > 0:
     st.warning(
-        f"⚠️ Is dataset mein Expedited shipping, Standard se "
-        f"{diff:.0f} days SLOWER nikli — koi clear speed advantage nahi mila."
-    )
+    f"⚠️ In this dataset, Expedited shipping showed a HIGHER average lead time "
+    f"than Standard Class by {diff:.0f} days — no clear speed advantage was found "
+    f"for premium shipping tiers. This should be read alongside the data quality "
+    f"note on the home page."
+)
 else:
     st.success(f"✅ Expedited shipping {abs(diff):.0f} days faster hai Standard se.")
