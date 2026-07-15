@@ -41,8 +41,9 @@ col3.metric("Factories", order_df["Factory"].nunique())
 col4.metric("States/Provinces Served", order_df["State/Province"].nunique())
 
 st.info(
-    "⚠️ Note: Is dashboard ke Lead Time figures directional hain. "
-    "Data cleaning ke dauraan Ship Date field mein ek data quality issue "
-    "mila tha -- absolute din-ginti ko literal mat maano, lekin "
-    "route-to-route relative ranking meaningful hai."
+    "⚠️ Data Quality Note: Lead Time figures in this dashboard are directional, "
+    "not literal. A systemic issue was found in the Ship Date field during data "
+    "cleaning (Ship Date years cluster 2026-2030 while Order Date years cluster "
+    "2024-2025). Absolute day-counts should not be taken literally, but "
+    "route-to-route relative rankings remain meaningful."
 )
