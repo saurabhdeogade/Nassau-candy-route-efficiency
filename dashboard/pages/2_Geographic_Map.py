@@ -1,13 +1,9 @@
-import os
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 st.set_page_config(layout="wide")
 st.title("🗺️ Geographic Shipping Map")
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DASHBOARD_DIR = os.path.join(BASE_DIR, "dashboard")
 
 US_STATE_ABBR = {
     "Alabama":"AL","Alaska":"AK","Arizona":"AZ","Arkansas":"AR","California":"CA",
@@ -26,10 +22,8 @@ US_STATE_ABBR = {
 
 @st.cache_data
 def load_data():
-    return pd.read_csv(
-        os.path.join(DASHBOARD_DIR, "order_level_data.csv"),
-        parse_dates=["Order Date","Ship Date"]
-    )
+    return pd.read_csv("dashboard/order_level_data.csv",
+                      parse_dates=["Order Date","Ship Date"])
 
 order_df = load_data()
 
@@ -57,17 +51,23 @@ st.plotly_chart(fig, use_container_width=True)
 
 if len(non_us) > 0:
     with st.expander("Non-US provinces excluded (data quality note)"):
-        st.dataframe(non_us[["State/Province","Shipment_Count","Avg_Lead_Time"]],
-                    hide_index=True)
+        st.dataframe(
+            non_us[["State/Province","Shipment_Count","Avg_Lead_Time"]],
+            hide_index=True
+        )
 
 st.subheader("Regional Bottleneck Summary")
 region_summary = order_df.groupby("Region").agg(
     Total_Shipments=("Order ID","count"),
     Avg_Lead_Time=("Lead Time","mean"),
+    Total_Sales=("Sales","sum"),
 ).reset_index().sort_values("Avg_Lead_Time", ascending=False)
-fig2 = px.bar(region_summary, x="Region", y="Avg_Lead_Time",
-              color="Total_Shipments",
-              title="Average Lead Time by Region",
-              labels={"Avg_Lead_Time":"Avg Lead Time (days)"})
+
+fig2 = px.bar(
+    region_summary, x="Region", y="Avg_Lead_Time",
+    color="Total_Shipments",
+    title="Average Lead Time by Region (colored by shipment volume)",
+    labels={"Avg_Lead_Time":"Avg Lead Time (days)"}
+)
 st.plotly_chart(fig2, use_container_width=True)
 st.dataframe(region_summary, use_container_width=True, hide_index=True)
