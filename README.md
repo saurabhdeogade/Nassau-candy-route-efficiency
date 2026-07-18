@@ -50,3 +50,8 @@ python -m streamlit run app.py
 **Organization:** Unified Mentor Pvt. Ltd.
 **Duration:** April 2026 – Present
 **Domain:** Data Analytics
+
+## Internship
+**Name:** Saurabh Deogade
+**Organization:** Unified Mentor Pvt. Ltd.
+**Domain:** Data Analytics
